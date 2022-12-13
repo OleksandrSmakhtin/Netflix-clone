@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44403386293B9839009C1CB3 /* HeroHeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44403385293B9839009C1CB3 /* HeroHeaderUIView.swift */; };
 		4462F41D292A832300549791 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4462F41C292A832300549791 /* AppDelegate.swift */; };
 		4462F41F292A832300549791 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4462F41E292A832300549791 /* SceneDelegate.swift */; };
 		4462F421292A832300549791 /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4462F420292A832300549791 /* MainTabBarVC.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		44403385293B9839009C1CB3 /* HeroHeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderUIView.swift; sourceTree = "<group>"; };
 		4462F419292A832300549791 /* Netflix clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Netflix clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4462F41C292A832300549791 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4462F41E292A832300549791 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				4462F43E292A913E00549791 /* CollectionViewTVC.swift */,
+				44403385293B9839009C1CB3 /* HeroHeaderUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				4462F436292A85FD00549791 /* SearchVC.swift in Sources */,
 				4462F421292A832300549791 /* MainTabBarVC.swift in Sources */,
 				4462F432292A858C00549791 /* HomeVC.swift in Sources */,
+				44403386293B9839009C1CB3 /* HeroHeaderUIView.swift in Sources */,
 				4462F41D292A832300549791 /* AppDelegate.swift in Sources */,
 				4462F438292A861700549791 /* DownloadsVC.swift in Sources */,
 				4462F434292A85CC00549791 /* UpcomingVC.swift in Sources */,

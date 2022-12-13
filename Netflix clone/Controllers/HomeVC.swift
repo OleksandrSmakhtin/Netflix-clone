@@ -30,8 +30,11 @@ class HomeVC: UIViewController {
         // set delegates
         setDelegates()
         
+        // initialize heroHeader UIView
+        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        
         // set main home header
-        homeTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        homeTable.tableHeaderView = headerView
     }
     
     // set constraints
