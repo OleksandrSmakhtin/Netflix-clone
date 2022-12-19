@@ -8,6 +8,9 @@
 import UIKit
 
 class HomeVC: UIViewController {
+    
+    
+    let sectionTitles: [String] = ["Trending Movies", "Popular","Trending TV", "Upcoming Movies","Top Rated"]
 
     // create table view and register cell
     private let homeTable: UITableView = {
@@ -31,7 +34,6 @@ class HomeVC: UIViewController {
         
         // initialize heroHeader UIView
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-        
         // set main home header
         homeTable.tableHeaderView = headerView
         
@@ -78,9 +80,30 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    // number of sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        20
+        return sectionTitles.count
     }
+    
+    
+    // title for section
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
+    }
+    
+    // change the header for the table view
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as?  UITableViewHeaderFooterView else { return }
+        
+        header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
+        header.textLabel?.textColor = .white
+        guard let firstLetterCapitalized = header.textLabel?.text?.first?.uppercased() else { return }
+        header.textLabel?.text = header.textLabel?.text?.lowercased()
+        header.textLabel?.text?.remove(at: header.textLabel!.text!.startIndex)
+        header.textLabel?.text?.insert(contentsOf: firstLetterCapitalized, at: header.textLabel!.text!.startIndex)
+    }
+    
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
