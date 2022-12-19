@@ -40,7 +40,24 @@ class HomeVC: UIViewController {
         // customizing the navigation bar
         configureNavigationBar()
         
+        getTrendingMovies()
+        
     }
+    
+    
+    private func getTrendingMovies() {
+        APICAller.shared.getTrendingMovies { results in
+            
+            switch results {
+            case .success(let movies):
+                print(movies)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
     
     
     private func configureNavigationBar() {
