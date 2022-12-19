@@ -29,7 +29,7 @@ class CollectionViewTVC: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .systemPink
+        contentView.backgroundColor = .systemGreen
         // add collection view to the subview
         contentView.addSubview(collectionView)
         // set delegates
@@ -65,7 +65,7 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .red
+        cell.backgroundColor = .systemGreen
         return cell
     }
     

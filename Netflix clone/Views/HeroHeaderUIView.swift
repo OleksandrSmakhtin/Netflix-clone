@@ -34,7 +34,6 @@ class HeroHeaderUIView: UIView {
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 1
-        
         // to use constraints
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
