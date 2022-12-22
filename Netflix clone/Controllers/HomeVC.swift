@@ -10,7 +10,7 @@ import UIKit
 class HomeVC: UIViewController {
     
     
-    let sectionTitles: [String] = ["Trending Movies", "Popular","Trending TV", "Upcoming Movies","Top Rated"]
+    let sectionTitles: [String] = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies","Top Rated"]
 
     // create table view and register cell
     private let homeTable: UITableView = {
@@ -40,22 +40,53 @@ class HomeVC: UIViewController {
         // customizing the navigation bar
         configureNavigationBar()
         
-        getTrendingMovies()
+        fetchData()
         
     }
     
     
-    private func getTrendingMovies() {
-        APICAller.shared.getTrendingMovies { results in
-            
-            switch results {
-            case .success(let movies):
-                print(movies)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+    
+    
+    private func fetchData() {
+        // fetching trending movies
+//        APICAller.shared.getTrendingMovies { results in
+//
+//            switch results {
+//            case .success(let movies):
+//                print(movies )
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+        
+        
+        // fetching trending tvs
+//        APICAller.shared.getTrendingTvs { results in
+//
+//        }
+        
+        
+        // fetching upcoming movies
+//        APICAller.shared.getUpcomingMovies { results in
+//
+//        }
+        
+        
+        // fetching popular movies
+//        APICAller.shared.getPopularMovies { results in
+//
+//        }
+        
+        // fetching top rated movies
+        APICAller.shared.getTopRatedMovies { results in
+            //
         }
+        
+        
+        
     }
+    
+
     
     
     
