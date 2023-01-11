@@ -101,7 +101,7 @@ class APICAller {
                 let results = try JSONDecoder().decode(TrendingTitlesResponse.self, from: data)
                 print(results.results[0])
             } catch {
-                completion(.failure(APIError.failedToGetData))
+                print(error.localizedDescription)
             }
         }.resume()
     }

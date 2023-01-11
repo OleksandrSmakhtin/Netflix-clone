@@ -139,7 +139,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         return sectionTitles[section]
     }
     
-    // change the header for the table view
+    // change the titles for the table view
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as?  UITableViewHeaderFooterView else { return }
         
