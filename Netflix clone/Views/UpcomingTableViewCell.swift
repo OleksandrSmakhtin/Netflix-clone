@@ -14,6 +14,9 @@ class UpcomingTableViewCell: UITableViewCell {
     
     private let playButton: UIButton = {
         let button = UIButton()
+        let image = UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -22,6 +25,7 @@ class UpcomingTableViewCell: UITableViewCell {
        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -53,15 +57,28 @@ class UpcomingTableViewCell: UITableViewCell {
         let posterViewConstraints = [
             posterView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            posterView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+            posterView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             posterView.widthAnchor.constraint(equalToConstant: 100)
         ]
-        NSLayoutConstraint.activate(posterViewConstraints )
+        // for titleLbl
+        let titleLblConstraints = [
+            titleLbl.leadingAnchor.constraint(equalTo: posterView.trailingAnchor, constant: 20),
+            titleLbl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ]
+        // for playBtn
+        let playButtonConstraints = [
+            playButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(posterViewConstraints)
+        NSLayoutConstraint.activate(titleLblConstraints)
+        NSLayoutConstraint.activate(playButtonConstraints)
     }
     
     public func configure(with model: TitleViewModel) {
         
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posteURL)") else { return }
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model.posterURL)") else { return }
         
         posterView.sd_setImage(with: url, completed: nil)
         titleLbl.text = model.titleName

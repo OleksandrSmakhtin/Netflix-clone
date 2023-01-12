@@ -15,7 +15,7 @@ class UpcomingVC: UIViewController {
     
     private let upcomingTable: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(UpcomingTableViewCell.self, forCellReuseIdentifier: UpcomingTableViewCell.identifier)
         return table
     }()
     
@@ -61,13 +61,23 @@ class UpcomingVC: UIViewController {
 
 //MARK: - UITableViewDelegate & DataSource
 extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 180
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         titles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else { return UITableViewCell()}
-        cell.textLabel?.text = titles[indexPath.row].original_name ?? titles[indexPath.row].original_title ?? "Unknown"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingTableViewCell.identifier) as? UpcomingTableViewCell else { return UITableViewCell()}
+        
+        let title = titles[indexPath.row].original_title ?? titles[indexPath.row].original_name ?? "Unknown"
+        let posterURL = titles[indexPath.row].poster_path
+        
+        cell.configure(with: TitleViewModel(titleName: title, posterURL: posterURL! ))
         
         return cell
     }
