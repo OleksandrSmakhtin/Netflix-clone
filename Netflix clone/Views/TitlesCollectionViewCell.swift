@@ -38,13 +38,10 @@ class TitlesCollectionViewCell: UICollectionViewCell {
     }
     
     
-    public func configure(withModel: String) {
-        guard let url = URL(string: withModel) else {return}
-        
+    public func configure(with model: String) {
+
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(model)") else { return }
         posterImageView.sd_setImage(with: url, completed: nil)
-        
-        
-        
     }
     
 }

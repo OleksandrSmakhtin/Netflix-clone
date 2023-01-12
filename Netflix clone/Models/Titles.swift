@@ -10,11 +10,11 @@ import Foundation
 
 struct TrendingTitlesResponse: Codable {
     
-    let results: [Titles]
+    let results: [Title]
     
 }
 
-struct Titles: Codable {
+struct Title: Codable {
     
     let id: Int
     let media_type: String?

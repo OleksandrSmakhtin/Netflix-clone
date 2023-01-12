@@ -12,6 +12,12 @@ class CollectionViewTVC: UITableViewCell {
     // create identifier
     static let identifier = "CollectionViewTVC"
     
+    
+    
+    // array of titles
+    private var titles = [Title]()
+    
+    
     // create collection view
     
     private let collectionView: UICollectionView = {
@@ -22,7 +28,7 @@ class CollectionViewTVC: UITableViewCell {
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(TitlesCollectionViewCell.self, forCellWithReuseIdentifier: TitlesCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -49,6 +55,16 @@ class CollectionViewTVC: UITableViewCell {
     }
     
     
+    
+    
+    public func configure(with titles: [Title]) {
+        self.titles = titles
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+    
+    
 
 }
 //MARK: - UICollectionView Delegate & DataSource
@@ -60,12 +76,17 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemGreen
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitlesCollectionViewCell.identifier, for: indexPath) as? TitlesCollectionViewCell else { return UICollectionViewCell()}
+        
+        
+        // method in titlesCVcell
+        guard let model = titles[indexPath.row].poster_path else { return UICollectionViewCell() }
+        cell.configure(with: model)
+        
         return cell
     }
     
