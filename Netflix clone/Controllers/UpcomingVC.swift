@@ -15,7 +15,7 @@ class UpcomingVC: UIViewController {
     
     private let upcomingTable: UITableView = {
         let table = UITableView()
-        table.register(UpcomingTableViewCell.self, forCellReuseIdentifier: UpcomingTableViewCell.identifier)
+        table.register(TitlesTableViewCell.self, forCellReuseIdentifier: TitlesTableViewCell.identifier)
         return table
     }()
     
@@ -24,7 +24,7 @@ class UpcomingVC: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
-        title = "Upcoming"
+        title = "Coming soon"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         
@@ -72,7 +72,7 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingTableViewCell.identifier) as? UpcomingTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TitlesTableViewCell.identifier) as? TitlesTableViewCell else { return UITableViewCell()}
         
         let title = titles[indexPath.row].original_title ?? titles[indexPath.row].original_name ?? "Unknown"
         let posterURL = titles[indexPath.row].poster_path

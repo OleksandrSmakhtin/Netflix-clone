@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UpcomingTableViewCell: UITableViewCell {
+class TitlesTableViewCell: UITableViewCell {
 
     static let identifier = "UpcomingTableViewCell"
     
