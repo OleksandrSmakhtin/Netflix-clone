@@ -44,6 +44,8 @@ class SearchVC: UIViewController {
         view.addSubview(searchTable)
         delegates()
         fetchDiscoverMovie()
+        
+        searchController.searchResultsUpdater = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,5 +101,37 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         searchTable.delegate = self
         searchTable.dataSource = self
     }
+    
+}
+
+//MARK: - UISearchResultsUpdating
+
+extension SearchVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        let searchBar = searchController.searchBar
+        
+        guard let query = searchBar.text,
+                !query.trimmingCharacters(in: .whitespaces).isEmpty,
+                query.trimmingCharacters(in: .whitespaces).count >= 3,
+                let resultController = searchController.searchResultsController as? SearchResultVC
+        else { return }
+        
+        APICAller.shared.search(with: query) { result in
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let titles):
+                    resultController.titles = titles
+                    resultController.searchResultCollectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                
+            }
+        }
+        
+    }
+    
     
 }
