@@ -14,10 +14,17 @@ class SearchVC: UIViewController {
     private var titles = [Title]()
     
     
-    let searchTable: UITableView = {
+    private let searchTable: UITableView = {
         let table = UITableView()
         table.register(TitlesTableViewCell.self, forCellReuseIdentifier: TitlesTableViewCell.identifier)
         return table
+    }()
+    
+    private let searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: SearchResultVC())
+        controller.searchBar.placeholder = "Search for a Movie or a TV"
+        controller.searchBar.searchBarStyle = .minimal
+        return controller
     }()
     
     
@@ -30,6 +37,9 @@ class SearchVC: UIViewController {
         title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
+        
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.searchController = searchController
         
         view.addSubview(searchTable)
         delegates()
