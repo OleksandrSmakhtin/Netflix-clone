@@ -91,5 +91,23 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        guard let titleName = titles[indexPath.row].original_title ?? titles[indexPath.row].original_name else { return }
+        print(titleName + " trailer")
+        
+        APICAller.shared.getMovie(with: titleName + " trailer") { retult  in
+            switch retult {
+            case .success(let videoElement):
+                print(videoElement.id)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    
     
 }

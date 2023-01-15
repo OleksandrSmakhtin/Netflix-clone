@@ -49,8 +49,7 @@ class HomeVC: UIViewController {
         homeTable.tableHeaderView = headerView
         
         // customizing the navigation bar
-        configureNavigationBar()
-                
+        configureNavigationBar()                
     }
     
  

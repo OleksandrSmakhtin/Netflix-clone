@@ -108,7 +108,6 @@ class APICAller {
     
     
 //MARK: - Discover
-    
     func getDiscoverMovie(completion: @escaping(Result<[Title], Error>) -> Void) {
         
         guard let url = URL(string: "\(Constant.BASE_URL)/3/discover/movie?api_key=\(Constant.API_KEY)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {return}
@@ -126,7 +125,7 @@ class APICAller {
     }
     
     
-    
+//MARK: - Search
     func search(with query: String, completion: @escaping(Result<[Title], Error>) -> Void) {
         
         // formating string for the query
@@ -145,14 +144,29 @@ class APICAller {
                 print(error.localizedDescription)
             }
         }.resume()
-        
-        
-        
-        
     }
 
     
-    
+    func getMovie(with query: String, completion: @escaping(Result<VideoElement, Error>) -> Void) {
+        
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return  }
+        
+        guard let url = URL(string: "\(Constant.YT_BASE_URL)q=\(query)&key=\(Constant.YT_API_KEY)")
+        else { return }
+        
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+            
+            guard let data = data, error == nil else {return}
+            
+            do {
+                let results = try JSONDecoder().decode(YTSearchResponse.self, from: data)
+                completion(.success(results.items[0]))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+        
+    }
     
     
 }
