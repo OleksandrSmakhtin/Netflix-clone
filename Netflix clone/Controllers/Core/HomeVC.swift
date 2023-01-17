@@ -21,6 +21,14 @@ enum Sections: Int {
 class HomeVC: UIViewController {
     
     
+    
+    
+    private var randomTrendingMovie: Title?
+    private var headerView: HeroHeaderUIView?
+    
+    
+    
+    
     let sectionTitles: [String] = ["Trending Movies", "Trending TV", "Popular", "Upcoming Movies","Top Rated"]
 
     // create table view and register cell
@@ -44,17 +52,42 @@ class HomeVC: UIViewController {
         setDelegates()
         
         // initialize heroHeader UIView
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        
         // set main home header
         homeTable.tableHeaderView = headerView
         
+        // configure headerView
+        configureHeroHeaderView()
+                
         // customizing the navigation bar
-        configureNavigationBar()                
+        configureNavigationBar()
+        
+        
     }
     
  
     
-
+    private func configureHeroHeaderView() {
+        APICAller.shared.getTrendingMovies { result in
+            switch result {
+            case .success(let title):
+                
+                let randomTitle = title.randomElement()
+                
+                self.randomTrendingMovie = randomTitle
+                
+                let name = randomTitle?.original_name ?? randomTitle?.original_title ?? "Unknown"
+                let poster = randomTitle?.poster_path ?? "No poster"
+                print("-----------\(name)-----------")
+                print("-----------\(poster)-----------")
+                self.headerView?.configure(with: TitleViewModel(titleName: name, posterURL: poster))
+                print("----------headerView.configure called")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     
     
@@ -128,6 +161,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTVC.identifier) as? CollectionViewTVC else { return UITableViewCell()}
+        
+        // runs the delegate
+        cell.delegate = self
         
 //MARK: - API CALL
         switch indexPath.section {
@@ -210,8 +246,20 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
-    
-    
+
+}
+
+//MARK: - CollectionViewTVCDelegate
+extension HomeVC: CollectionViewTVCDelegate {
+    func collectionViewTVCDidTapCell(_ cell: CollectionViewTVC, viewModel: TitlePreviewViewModel) {
+        
+        DispatchQueue.main.async { [weak self] in
+            let vc = TitlePreviewVC()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+
+    }
     
     
 }
