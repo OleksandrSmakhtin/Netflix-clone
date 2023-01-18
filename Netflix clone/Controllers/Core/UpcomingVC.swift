@@ -27,7 +27,7 @@ class UpcomingVC: UIViewController {
         title = "Coming soon"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        
+        navigationController?.navigationBar.tintColor = .white
         
         view.addSubview(upcomingTable)
         delegates()
@@ -81,6 +81,31 @@ extension UpcomingVC: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        
+        guard let titleName = title.original_name ?? title.original_title else { return }
+        guard let titleOverview = title.overview else { return }
+        
+        APICAller.shared.getMovie(with: titleName) { [weak self]  result in
+            switch result {
+            case .success(let videoElement):
+                DispatchQueue.main.async {
+                    let vc = TitlePreviewVC()
+                    vc.configure(with: TitlePreviewViewModel(title: titleName, YTVideo: videoElement, titleOverview: titleOverview ))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
     
     
     

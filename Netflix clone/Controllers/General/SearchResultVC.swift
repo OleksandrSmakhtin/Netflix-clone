@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol SearchResultVCDelegate: AnyObject {
+    func searchResultVCDidTapItem(viewModel: TitlePreviewViewModel)
+}
+
+
 class SearchResultVC: UIViewController {
     
     
     public var titles = [Title]()
+    
+    public weak var delegate: SearchResultVCDelegate?
     
     public let searchResultCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,6 +66,31 @@ extension SearchResultVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        guard let titleName = title.original_name ?? title.original_title else { return }
+        guard let titleOverview = title.overview else { return }
+        
+        APICAller.shared.getMovie(with: titleName) { [weak self]  result in
+            switch result {
+            case .success(let videoElement):
+                self?.delegate?.searchResultVCDidTapItem(viewModel: TitlePreviewViewModel(title: titleName, YTVideo: videoElement, titleOverview: titleOverview ))
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        
+
+        
+    }
+    
+    
     
     private func delegates() {
         searchResultCollectionView.delegate = self

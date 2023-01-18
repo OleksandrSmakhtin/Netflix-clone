@@ -123,9 +123,21 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    
+    
+    // let us download a moview
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
+                print("----Download Tapped----")
+            }
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline , children: [downloadAction ])
+        }
         
-        
+        return config
     }
     
     

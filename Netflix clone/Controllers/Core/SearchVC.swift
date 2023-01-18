@@ -97,6 +97,31 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        
+        guard let titleName = title.original_name ?? title.original_title else { return }
+        guard let titleOverview = title.overview else { return }
+        
+        APICAller.shared.getMovie(with: titleName) { [weak self]  result in
+            
+            switch result {
+            case .success(let videoElement):
+                DispatchQueue.main.async {
+                    let vc = TitlePreviewVC()
+                    vc.configure(with: TitlePreviewViewModel(title: titleName, YTVideo: videoElement, titleOverview: titleOverview ))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    
     private func delegates() {
         searchTable.delegate = self
         searchTable.dataSource = self
@@ -106,7 +131,17 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: - UISearchResultsUpdating
 
-extension SearchVC: UISearchResultsUpdating {
+extension SearchVC: UISearchResultsUpdating, SearchResultVCDelegate {
+    func searchResultVCDidTapItem(viewModel: TitlePreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = TitlePreviewVC()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
+    
+    
     func updateSearchResults(for searchController: UISearchController) {
         
         let searchBar = searchController.searchBar
@@ -116,6 +151,8 @@ extension SearchVC: UISearchResultsUpdating {
                 query.trimmingCharacters(in: .whitespaces).count >= 3,
                 let resultController = searchController.searchResultsController as? SearchResultVC
         else { return }
+        
+        resultController.delegate = self
         
         APICAller.shared.search(with: query) { result in
             DispatchQueue.main.async {
@@ -130,6 +167,8 @@ extension SearchVC: UISearchResultsUpdating {
                 
             }
         }
+
+        
         
     }
     

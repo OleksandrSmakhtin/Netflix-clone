@@ -74,8 +74,8 @@ class TitlePreviewVC: UIViewController {
         
         let overviewLblConstraints = [
             overviewLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 15),
-            overviewLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            overviewLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20)
+            overviewLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            overviewLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 25)
         ]
         
         let downloadBtnConstraints = [
