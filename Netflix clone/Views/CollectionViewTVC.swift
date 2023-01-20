@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 protocol CollectionViewTVCDelegate: AnyObject {
@@ -72,6 +73,19 @@ class CollectionViewTVC: UITableViewCell {
         }
     }
     
+    private func downloadTitleAt(indexPath: IndexPath) {
+        
+        DataPersistenceManager.shared.downloadTitle(with: titles[indexPath.row]) { result in
+            switch result {
+            case .success():
+                print("Successful download")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
     
 
 }
@@ -124,15 +138,15 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
             }
         }
     }
-    
+     
     
     
     // let us download a moview
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
-                print("----Download Tapped----")
+            let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { [weak self] _ in
+                self?.downloadTitleAt(indexPath: indexPath)
             }
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline , children: [downloadAction ])
         }
