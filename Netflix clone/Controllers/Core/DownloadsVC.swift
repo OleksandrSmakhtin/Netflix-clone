@@ -33,6 +33,12 @@ class DownloadsVC: UIViewController {
         
         delegates()
         fetchForDownloads()
+        
+        // listen for notifications and update table
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("Downloaded"), object: nil, queue: nil) { _ in
+            self.fetchForDownloads()
+        }
+        
     }
     
     private func fetchForDownloads() {
@@ -106,6 +112,29 @@ extension DownloadsVC: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let title = titles[indexPath.row]
+        
+        guard let titleName = title.original_name ?? title.original_title else { return }
+        guard let titleOverview = title.overview else { return }
+        
+        APICAller.shared.getMovie(with: titleName) { [weak self]  result in
+            switch result {
+            case .success(let videoElement):
+                DispatchQueue.main.async {
+                    let vc = TitlePreviewVC()
+                    vc.configure(with: TitlePreviewViewModel(title: titleName, YTVideo: videoElement, titleOverview: titleOverview ))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
     
     
