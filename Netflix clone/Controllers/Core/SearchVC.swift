@@ -148,7 +148,7 @@ extension SearchVC: UISearchResultsUpdating, SearchResultVCDelegate {
         
         guard let query = searchBar.text,
                 !query.trimmingCharacters(in: .whitespaces).isEmpty,
-                query.trimmingCharacters(in: .whitespaces).count >= 3,
+                query.trimmingCharacters(in: .whitespaces).count >= 5,
                 let resultController = searchController.searchResultsController as? SearchResultVC
         else { return }
         

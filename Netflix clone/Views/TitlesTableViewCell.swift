@@ -17,6 +17,7 @@ class TitlesTableViewCell: UITableViewCell {
         let image = UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
         button.setImage(image, for: .normal)
         button.tintColor = .white
+        button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -31,6 +32,7 @@ class TitlesTableViewCell: UITableViewCell {
     
     private let titleLbl: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         // enable constarints
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -63,11 +65,17 @@ class TitlesTableViewCell: UITableViewCell {
         // for titleLbl
         let titleLblConstraints = [
             titleLbl.leadingAnchor.constraint(equalTo: posterView.trailingAnchor, constant: 20),
+            //titleLbl.trailingAnchor.constraint(equalTo: playButton.leadingAnchor, constant: -10),
+            //titleLbl.heightAnchor.constraint(equalToConstant: 50),
+            //titleLbl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20)
             titleLbl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ]
         // for playBtn
         let playButtonConstraints = [
             playButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            playButton.leadingAnchor.constraint(equalTo: titleLbl.trailingAnchor, constant: 20),
+            playButton.widthAnchor.constraint(equalToConstant: 30),
+            playButton.heightAnchor.constraint(equalToConstant: 30),
             playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ]
         

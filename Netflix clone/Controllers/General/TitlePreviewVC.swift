@@ -15,6 +15,7 @@ class TitlePreviewVC: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.numberOfLines = 0
         label.textColor = .white
         return label
     }()
@@ -24,7 +25,7 @@ class TitlePreviewVC: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = .lightGray
         return label
     }()
     
@@ -69,13 +70,14 @@ class TitlePreviewVC: UIViewController {
         
         let titleLblConstraints = [
             titleLbl.topAnchor.constraint(equalTo: webView.bottomAnchor, constant: 20),
-            titleLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            titleLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ]
         
         let overviewLblConstraints = [
-            overviewLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 15),
-            overviewLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            overviewLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 25)
+            overviewLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 20),
+            overviewLbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            overviewLbl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25)
         ]
         
         let downloadBtnConstraints = [

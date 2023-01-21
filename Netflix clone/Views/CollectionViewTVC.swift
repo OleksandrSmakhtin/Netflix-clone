@@ -75,6 +75,12 @@ class CollectionViewTVC: UITableViewCell {
     
     private func downloadTitleAt(indexPath: IndexPath) {
         
+        
+        let titleName = titles[indexPath.row].original_name ?? titles[indexPath.row].original_title ?? "Unknown"
+        
+        // sends notification
+        NotificationManager.shared.downloadedNotification(title: titleName)
+        
         DataPersistenceManager.shared.downloadTitle(with: titles[indexPath.row]) { result in
             switch result {
             case .success():
@@ -152,6 +158,8 @@ extension CollectionViewTVC: UICollectionViewDelegate, UICollectionViewDataSourc
         
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { [weak self] _ in
+                
+                
                 self?.downloadTitleAt(indexPath: indexPath)
             }
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline , children: [downloadAction ])

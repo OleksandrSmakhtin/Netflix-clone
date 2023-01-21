@@ -57,6 +57,11 @@ class HomeVC: UIViewController {
         // set main home header
         homeTable.tableHeaderView = headerView
         
+        
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.tintColor = .white
+        
         // configure headerView
         configureHeroHeaderView()
                 
@@ -102,7 +107,7 @@ class HomeVC: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         ]
         
-        navigationController?.navigationBar.tintColor = .label
+        //navigationController?.navigationBar.tintColor = .label
         
         
     }
