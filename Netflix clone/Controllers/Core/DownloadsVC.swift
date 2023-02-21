@@ -97,6 +97,7 @@ extension DownloadsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
+            
             DataPersistenceManager.shared.deleteTitle(with: titles[indexPath.row]) { result in
                 switch result {
                 case .success():
@@ -104,6 +105,7 @@ extension DownloadsVC: UITableViewDelegate, UITableViewDataSource {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+                
                 self.titles.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 

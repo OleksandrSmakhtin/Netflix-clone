@@ -98,8 +98,7 @@ class HeroHeaderUIView: UIView {
         print("   ----------IN CONFIGURE---------")
         let poster = model.posterURL
         
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(poster )") else { return }
-        print("--------------\(url)-----------------")
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(poster)") else { return }
         heroImageView.sd_setImage(with: url)
     }
     

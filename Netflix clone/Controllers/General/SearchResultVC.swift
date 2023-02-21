@@ -15,7 +15,13 @@ protocol SearchResultVCDelegate: AnyObject {
 class SearchResultVC: UIViewController {
     
     
-    public var titles = [Title]()
+    public var titles = [Title]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchResultCollectionView.reloadData()
+            }
+        }
+    }
     
     public weak var delegate: SearchResultVCDelegate?
     

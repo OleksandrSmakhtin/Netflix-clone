@@ -159,8 +159,10 @@ extension SearchVC: UISearchResultsUpdating, SearchResultVCDelegate {
                 
                 switch result {
                 case .success(let titles):
-                    resultController.titles = titles
-                    resultController.searchResultCollectionView.reloadData()
+                    //DispatchQueue.main.async {
+                        resultController.titles = titles
+                        resultController.searchResultCollectionView.reloadData()
+                    //}
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
